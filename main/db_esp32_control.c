@@ -65,6 +65,8 @@ int open_serial_socket() {
     };
     ESP_ERROR_CHECK(uart_param_config(UART_NUM_2, &uart_config));
     ESP_ERROR_CHECK(uart_set_pin(UART_NUM_2, DB_UART_PIN_TX, DB_UART_PIN_RX, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
+    /* Inverse TX for compatibility with Omnibus F4 Nano V6.1 FC */
+    ESP_ERROR_CHECK(uart_line_inverse(UART_NUM_2, UART_SIGNAL_TXD_INV));
     ESP_ERROR_CHECK(uart_driver_install(UART_NUM_2, 1024, 0, 0, NULL, 0));
     if ((serial_socket = open("/dev/uart/2", O_RDWR)) == -1) {
         ESP_LOGE(TAG, "Cannot open UART2");
