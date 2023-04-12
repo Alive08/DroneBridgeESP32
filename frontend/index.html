@@ -130,12 +130,20 @@
             </div>
             <div class="row">
                 <div class="six columns">
-                    <label for="tx_pin">UART TX Pin</label>
+                    <label for="tx_pin">UART TX Pin | Inverted</label>
                     <input type="text" name="tx_pin" value="" id="tx_pin">
+                    <select name="tx_inv" id="tx_inv">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
                 </div>
                 <div class="six columns">
-                    <label for="rx_pin">UART RX Pin</label>
+                    <label for="rx_pin">UART RX Pin | Inverted</label>
                     <input type="text" name="rx_pin" value="" id="rx_pin">
+                    <select name="rx_inv" id="rx_inv">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
                 </div>
             </div>
             <div class="row">

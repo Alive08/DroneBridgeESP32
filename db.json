@@ -28,10 +28,12 @@
     "wifi_pass": "dronebridge Test",
     "ap_channel": 12,
     "tx_pin": 22,
+    "tx_inv": 1,
     "rx_pin": 22,
+    "rx_inv": 1,
     "telem_proto": 4,
     "baud": 115200,
-    "msp_ltm_same": 1,
+    "msp_ltm_port": 1,
     "ltm_pp": 2,
     "trans_pack_size": 32,
     "ap_ip": "192.168.2.1"

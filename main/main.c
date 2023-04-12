@@ -38,7 +38,7 @@
 #include "main.h"
 
 #define NVS_NAMESPACE "settings"
-#define USE_ALT_UART_CONFIG // for boards that have flash connected to GPIO 17/16 - will crash otherwise
+// #define USE_ALT_UART_CONFIG // for boards that have flash connected to GPIO 17/16 - will crash otherwise
 
 static const char *TAG = "DB_ESP32";
 
@@ -54,6 +54,8 @@ uint8_t DB_UART_PIN_RX = GPIO_NUM_32;
 uint8_t DB_UART_PIN_TX = GPIO_NUM_17;
 uint8_t DB_UART_PIN_RX = GPIO_NUM_16;
 #endif
+uint8_t DB_UART_TX_INV = 0;
+uint8_t DB_UART_RX_INV = 0;
 int DB_UART_BAUD_RATE = 115200;
 uint16_t TRANSPARENT_BUF_SIZE = 64;
 uint8_t LTM_FRAME_NUM_BUFFER = 1;
@@ -185,9 +187,9 @@ void init_wifi(void) {
 
 void write_settings_to_nvs() {
     ESP_LOGI(TAG,
-             "Trying to save: ssid %s\nwifi_pass %s\nwifi_chan %i\nbaud %i\ngpio_tx %i\ngpio_rx %i\nproto %i\n"
+             "Trying to save: ssid %s\nwifi_pass %s\nwifi_chan %i\nbaud %i\ngpio_tx %i\ngpio_rx %i\ntx_inv %i\nrx_inv %i\nproto %i\n"
              "trans_pack_size %i\nltm_per_packet %i\nmsp_ltm %i\nap_ip %s",
-             DEFAULT_SSID, DEFAULT_PWD, DEFAULT_CHANNEL, DB_UART_BAUD_RATE, DB_UART_PIN_TX, DB_UART_PIN_RX,
+             DEFAULT_SSID, DEFAULT_PWD, DEFAULT_CHANNEL, DB_UART_BAUD_RATE, DB_UART_PIN_TX, DB_UART_PIN_RX, DB_UART_TX_INV, DB_UART_RX_INV,
              SERIAL_PROTOCOL, TRANSPARENT_BUF_SIZE, LTM_FRAME_NUM_BUFFER, MSP_LTM_SAMEPORT, DEFAULT_AP_IP);
     ESP_LOGI(TAG, "Saving to NVS %s", NVS_NAMESPACE);
     nvs_handle my_handle;
@@ -198,6 +200,8 @@ void write_settings_to_nvs() {
     ESP_ERROR_CHECK(nvs_set_i32(my_handle, "baud", DB_UART_BAUD_RATE));
     ESP_ERROR_CHECK(nvs_set_u8(my_handle, "gpio_tx", DB_UART_PIN_TX));
     ESP_ERROR_CHECK(nvs_set_u8(my_handle, "gpio_rx", DB_UART_PIN_RX));
+    ESP_ERROR_CHECK(nvs_set_u8(my_handle, "tx_inv", DB_UART_TX_INV));
+    ESP_ERROR_CHECK(nvs_set_u8(my_handle, "rx_inv", DB_UART_RX_INV));
     ESP_ERROR_CHECK(nvs_set_u8(my_handle, "proto", SERIAL_PROTOCOL));
     ESP_ERROR_CHECK(nvs_set_u16(my_handle, "trans_pack_size", TRANSPARENT_BUF_SIZE));
     ESP_ERROR_CHECK(nvs_set_u8(my_handle, "ltm_per_packet", LTM_FRAME_NUM_BUFFER));
@@ -238,6 +242,8 @@ void read_settings_nvs() {
         ESP_ERROR_CHECK(nvs_get_i32(my_handle, "baud", &DB_UART_BAUD_RATE));
         ESP_ERROR_CHECK(nvs_get_u8(my_handle, "gpio_tx", &DB_UART_PIN_TX));
         ESP_ERROR_CHECK(nvs_get_u8(my_handle, "gpio_rx", &DB_UART_PIN_RX));
+        ESP_ERROR_CHECK(nvs_get_u8(my_handle, "tx_inv", &DB_UART_TX_INV));
+        ESP_ERROR_CHECK(nvs_get_u8(my_handle, "rx_inv", &DB_UART_RX_INV));
         ESP_ERROR_CHECK(nvs_get_u8(my_handle, "proto", &SERIAL_PROTOCOL));
         ESP_ERROR_CHECK(nvs_get_u16(my_handle, "trans_pack_size", &TRANSPARENT_BUF_SIZE));
         ESP_ERROR_CHECK(nvs_get_u8(my_handle, "ltm_per_packet", &LTM_FRAME_NUM_BUFFER));

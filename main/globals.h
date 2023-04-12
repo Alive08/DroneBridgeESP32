@@ -35,6 +35,8 @@ extern uint8_t DEFAULT_CHANNEL;
 extern uint8_t SERIAL_PROTOCOL;  // 1=MSP, 3=MAVLink/transparent
 extern uint8_t DB_UART_PIN_TX;
 extern uint8_t DB_UART_PIN_RX;
+extern uint8_t DB_UART_TX_INV;
+extern uint8_t DB_UART_RX_INV;
 extern int DB_UART_BAUD_RATE;
 extern uint16_t TRANSPARENT_BUF_SIZE;
 extern uint8_t LTM_FRAME_NUM_BUFFER;    // Number of LTM frames per UDP packet (min = 1; max = 5)
